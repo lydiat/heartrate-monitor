@@ -1,0 +1,70 @@
+/* css/style.less */
+body {
+  font-family: Arial;
+  background: #444140;
+  color: #444140;
+}
+#container {
+  background: #F7EBE8;
+  width: 280px;
+  height: 470px;
+  margin: 20px auto;
+  text-align: center;
+  border-radius: 20px;
+  padding: 20px;
+}
+#container button {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  margin: 0px 20px;
+  padding: 15px 30px;
+  color: #F7EBE8;
+}
+#container #reset {
+  background-color: #E54B4B;
+}
+#container #stop {
+  background-color: #3C0919;
+}
+#container #milliseconds,
+#container #bps,
+#container #tapper {
+  padding: 15px 0px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 0px -2px 20px;
+  width: 100%;
+  background: white;
+  border: 2px solid #FFA987;
+  float: left;
+  clear: left;
+  position: relative;
+  border-radius: 10px;
+}
+#container #tapper {
+  border: 2px solid #E54B4B;
+  height: 220px;
+}
+#container #tapper #heart {
+  color: #E54B4B;
+  transition: transform 0.1s ease;
+  -moz-transition: transform 0.1s ease;
+  -ms-transition: transform 0.1s ease;
+  -webkit-transition: transform 0.1s ease;
+}
+#container #tapper #heart i {
+  font-size: 140px;
+}
+#container #tapper #heart.beat {
+  color: #e23535;
+  transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+}
+#container #tapper .text {
+  padding: 20px;
+  text-align: center;
+}
