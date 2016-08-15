@@ -15,7 +15,9 @@
 </head>
 
 <body>
- <!--<video autoplay="true" id="videoElement"></video>-->
+ <video autoplay="true" id="videoElement"></video>
+ <canvas id="canvasElement"></canvas>
+
     <div id="container">
         <div id="tapper" class="hits">
             <div id="heart"><i class="material-icons">favorite</i></div>

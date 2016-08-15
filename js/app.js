@@ -13,6 +13,7 @@ var app = {
     countingTime: 0,
     beatCount: 0,
     timerInterval: '',
+    stopVideo: 'false',
 
 
     init: function() {
@@ -33,27 +34,68 @@ var app = {
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 
         if (navigator.getUserMedia) {
-          //  navigator.getUserMedia({ video: true }, function(stream) {
-             //   video.src = window.URL.createObjectURL(stream);
-          //  }, function(e) {});
+            navigator.getUserMedia({ video: true }, function(stream) {
+                video.src = window.URL.createObjectURL(stream);
+                app.drawVideo();
+
+            }, function(e) {});
         }
 
     },
 
+    drawVideo: function() {
+
+        var videoElement = document.getElementById('videoElement');
+        var canvasElement = document.getElementById('canvasElement');
+        var canvasContext = canvasElement.getContext('2d');
+
+        var canvasWidth = Math.floor(canvasElement.clientWidth);
+        var canvasHeight = Math.floor(canvasElement.clientHeight);
+        canvasElement.width = canvasWidth;
+        canvasElement.height = canvasHeight;
+
+        videoElement.addEventListener('play', function() {
+
+            app.drawImage(videoElement, canvasContext, canvasWidth, canvasHeight);
+
+        }, false);
+
+    },
+
+    drawImage: function(videoElement, canvasContext, canvasWidth, canvasHeight) {
+
+        if (videoElement.paused || videoElement.ended || app.stopVideo === 'true')
+            return false;
+
+        canvasContext.drawImage(videoElement, 0, 0, canvasWidth, canvasHeight);
+
+        setTimeout(app.drawImage, 20, videoElement, canvasContext, canvasWidth, canvasHeight);
+
+        // so far just fooling around with averaging points to get the R from the RGB
+        var a = canvasContext.getImageData(0, 0, 1, 1);
+        var b = canvasContext.getImageData(10, 10, 1, 1);
+        var c = canvasContext.getImageData(20, 20, 1, 1);
+        var d = canvasContext.getImageData(30, 30, 1, 1);
+        var e = canvasContext.getImageData(40, 40, 1, 1);
+
+        var avg = (a.data[0] + c.data[0] + c.data[0] + d.data[0] + e.data[0]) / 5;
+
+        console.log(Math.floor(avg));
+    },
+
     stopMonitor: function() {
         app.timerStarted = 'false';
+        app.stopVideo = 'true';
         clearInterval(app.timerInterval);
     },
 
     resetMonitor: function() {
-
         app.timerStarted = 'false';
         clearInterval(app.timerInterval);
         document.getElementById('bpsNum').innerHTML = '0';
         document.getElementById("millisecondNum").innerHTML = '0';
         app.countingTime = 0;
         app.beatCount = 0;
-
     },
 
     countBeats: function(event) {
